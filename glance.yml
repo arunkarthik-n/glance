@@ -1,5 +1,10 @@
-docker run -d -p 8080:8080 \
-  -v ./glance.yml:/app/glance.yml \
-  -v /etc/timezone:/etc/timezone:ro \
-  -v /etc/localtime:/etc/localtime:ro \
-  glanceapp/glance
+services:
+  glance:
+    image: glanceapp/glance
+    volumes:
+      - ./glance.yml:/app/glance.yml
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8080:8080
+    restart: unless-stopped
