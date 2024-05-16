@@ -1,0 +1,5 @@
+docker run -d -p 8080:8080 \
+  -v ./glance.yml:/app/glance.yml \
+  -v /etc/timezone:/etc/timezone:ro \
+  -v /etc/localtime:/etc/localtime:ro \
+  glanceapp/glance
