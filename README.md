@@ -1,6 +1,6 @@
 <p align="center"><em>What if you could see everything at a...</em></p>
 <h1 align="center">Glance</h1>
-<p align="center"><a href="#installation">Install</a> • <a href="docs/configuration.md">Configuration</a> • <a href="docs/themes.md">Themes</a></p>
+<p align="center"><a href="#installation">Install</a> • <a href="docs/configuration.md">Configuration</a> • <a href="docs/preconfigured-pages.md">Preconfigured pages</a> • <a href="docs/themes.md">Themes</a> • <a href="https://discord.com/invite/7KQ7Xa9kJd">Discord</a></p>
 
 ![example homepage](docs/images/readme-main-image.png)
 
@@ -10,7 +10,10 @@
 * Subreddit posts
 * Weather
 * Bookmarks
+* Hacker News
+* Lobsters
 * Latest YouTube videos from specific channels
+* Clock
 * Calendar
 * Stocks
 * iframe
@@ -18,6 +21,7 @@
 * GitHub releases
 * Repository overview
 * Site monitor
+* Search box
 
 #### Themeable
 ![multiple color schemes example](docs/images/themes-example.png)
@@ -92,18 +96,12 @@ go run .
 
 ### Building Docker image
 
-Build Glance with CGO disabled:
-
-```bash
-CGO_ENABLED=0 go build -o build/glance .
-```
-
 Build the image:
 
 **Make sure to replace "owner" with your name or organization.**
 
 ```bash
-docker build -t owner/glance:latest -f Dockerfile.single-platform .
+docker build -t owner/glance:latest .
 ```
 
 Push the image to your registry:

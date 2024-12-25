@@ -15,6 +15,7 @@ var (
 	PageTemplate                  = compileTemplate("page.html", "document.html", "page-style-overrides.gotmpl")
 	PageContentTemplate           = compileTemplate("content.html")
 	CalendarTemplate              = compileTemplate("calendar.html", "widget-base.html")
+	ClockTemplate                 = compileTemplate("clock.html", "widget-base.html")
 	BookmarksTemplate             = compileTemplate("bookmarks.html", "widget-base.html")
 	IFrameTemplate                = compileTemplate("iframe.html", "widget-base.html")
 	WeatherTemplate               = compileTemplate("weather.html", "widget-base.html")
@@ -22,16 +23,22 @@ var (
 	RedditCardsHorizontalTemplate = compileTemplate("reddit-horizontal-cards.html", "widget-base.html")
 	RedditCardsVerticalTemplate   = compileTemplate("reddit-vertical-cards.html", "widget-base.html")
 	ReleasesTemplate              = compileTemplate("releases.html", "widget-base.html")
+	ChangeDetectionTemplate       = compileTemplate("change-detection.html", "widget-base.html")
 	VideosTemplate                = compileTemplate("videos.html", "widget-base.html", "video-card-contents.html")
 	VideosGridTemplate            = compileTemplate("videos-grid.html", "widget-base.html", "video-card-contents.html")
-	StocksTemplate                = compileTemplate("stocks.html", "widget-base.html")
+	MarketsTemplate               = compileTemplate("markets.html", "widget-base.html")
 	RSSListTemplate               = compileTemplate("rss-list.html", "widget-base.html")
+	RSSDetailedListTemplate       = compileTemplate("rss-detailed-list.html", "widget-base.html")
 	RSSHorizontalCardsTemplate    = compileTemplate("rss-horizontal-cards.html", "widget-base.html")
 	RSSHorizontalCards2Template   = compileTemplate("rss-horizontal-cards-2.html", "widget-base.html")
 	MonitorTemplate               = compileTemplate("monitor.html", "widget-base.html")
 	TwitchGamesListTemplate       = compileTemplate("twitch-games-list.html", "widget-base.html")
 	TwitchChannelsTemplate        = compileTemplate("twitch-channels.html", "widget-base.html")
 	RepositoryTemplate            = compileTemplate("repository.html", "widget-base.html")
+	SearchTemplate                = compileTemplate("search.html", "widget-base.html")
+	ExtensionTemplate             = compileTemplate("extension.html", "widget-base.html")
+	GroupTemplate                 = compileTemplate("group.html", "widget-base.html")
+	DNSStatsTemplate              = compileTemplate("dns-stats.html", "widget-base.html")
 )
 
 var globalTemplateFunctions = template.FuncMap{
@@ -43,19 +50,6 @@ var globalTemplateFunctions = template.FuncMap{
 	},
 	"formatPrice": func(price float64) string {
 		return intl.Sprintf("%.2f", price)
-	},
-	"formatTime": func(t time.Time) string {
-		return t.Format("2006-01-02 15:04:05")
-	},
-	"shouldCollapse": func(i int, collapseAfter int) bool {
-		if collapseAfter < -1 {
-			return false
-		}
-
-		return i >= collapseAfter
-	},
-	"itemAnimationDelay": func(i int, collapseAfter int) string {
-		return fmt.Sprintf("%dms", (i-collapseAfter)*30)
 	},
 	"dynamicRelativeTimeAttrs": func(t time.Time) template.HTMLAttr {
 		return template.HTMLAttr(fmt.Sprintf(`data-dynamic-relative-time="%d"`, t.Unix()))

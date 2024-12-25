@@ -2,7 +2,6 @@ package widget
 
 import (
 	"html/template"
-	"strings"
 
 	"github.com/glanceapp/glance/internal/assets"
 )
@@ -22,7 +21,6 @@ type Bookmarks struct {
 			HideArrow    bool   `yaml:"hide-arrow"`
 		} `yaml:"links"`
 	} `yaml:"groups"`
-	Style string `yaml:"style"`
 }
 
 func (widget *Bookmarks) Initialize() error {
@@ -34,11 +32,8 @@ func (widget *Bookmarks) Initialize() error {
 				continue
 			}
 
-			if strings.HasPrefix(widget.Groups[g].Links[l].Icon, "si:") {
-				icon := strings.TrimPrefix(widget.Groups[g].Links[l].Icon, "si:")
-				widget.Groups[g].Links[l].IsSimpleIcon = true
-				widget.Groups[g].Links[l].Icon = "https://cdnjs.cloudflare.com/ajax/libs/simple-icons/11.14.0/" + icon + ".svg"
-			}
+			link := &widget.Groups[g].Links[l]
+			link.Icon, link.IsSimpleIcon = toSimpleIconIfPrefixed(link.Icon)
 		}
 	}
 

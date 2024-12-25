@@ -4,8 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"regexp"
 	"slices"
 	"strings"
+	"time"
 )
 
 var (
@@ -76,4 +78,40 @@ func maybeCopySliceWithoutZeroValues[T int | float64](values []T) []T {
 	}
 
 	return values
+}
+
+var urlSchemePattern = regexp.MustCompile(`^[a-z]+:\/\/`)
+
+func stripURLScheme(url string) string {
+	return urlSchemePattern.ReplaceAllString(url, "")
+}
+
+func limitStringLength(s string, max int) (string, bool) {
+	asRunes := []rune(s)
+
+	if len(asRunes) > max {
+		return string(asRunes[:max]), true
+	}
+
+	return s, false
+}
+
+func parseRFC3339Time(t string) time.Time {
+	parsed, err := time.Parse(time.RFC3339, t)
+
+	if err != nil {
+		return time.Now()
+	}
+
+	return parsed
+}
+
+func normalizeVersionFormat(version string) string {
+	version = strings.ToLower(strings.TrimSpace(version))
+
+	if len(version) > 0 && version[0] != 'v' {
+		return "v" + version
+	}
+
+	return version
 }
